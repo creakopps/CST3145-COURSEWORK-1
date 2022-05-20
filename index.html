@@ -1,0 +1,139 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, initial-scale=1.0" />
+    <title>After School Club</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="lessons.js">
+  </head>
+  <body style="display: flex;align-items: center;justify-content:center;">
+    <div id="app" style="margin: 1em">
+      <h1 id="title">{{subject.title}}</h1>
+      <img
+        :src="subject.image"
+        style="width: 15%; float: left; margin-right: 1em"
+        alt="maths"
+      />
+
+    <body>
+    <div id="app">
+
+        <header>
+            <h1 v-text="sitename"></h1>
+            <button v-on:click='showCheckout'>{{cartItemCount}}<span class="fas fa-shopping-cart"></span>Checkout</button>
+        </header>
+        <main>
+            <div v-if="showProduct">
+
+                <div>
+                    <h1>Sort by</h1>
+                    <p>
+                        <input type="radio" name="Attributes" @click="sortTable('Subject')">
+                        <label for="Subject">Subject</label>
+                        <input type="radio" name="Attributes" @click="sortTable('Location')">
+                        <label for="Location">Location</label>
+                        <input type="radio" name="Attributes" @click="sortTable('price')">
+                        <label for="Price">Price</label>
+                        <input type="radio" name="Attributes" @click="sortTable('Space')">
+                        <label for="Space">Space</label>
+                    </p>
+                    <p>
+                        <input type="radio" name="fav" @click="sortTable('asc')">
+                        <label for="Subject">Ascending</label>
+                        <input type="radio" name="fav" @click="sortTable('desc')">
+                        <label for="Location">Descscending</label>
+                    </p>
+                </div>
+
+
+       <div style="display: flex; flex-wrap: wrap; gap: 10px">
+        <div v-for="subject to subject" style="border: 5px solid blue; width: 150px; background-color: lightblue">
+        <h2 id="subject">{{subject.lesson }}</h2>
+        <p id="location">Location: {{subject.location }}</p>
+        <p id="Price">Price: {{subject.Price }}</p>
+        <p id="numberOfSpaces">Number of Spaces: {{subject.space}}</p>
+        <button id="addToCartButton" v-on:click="sellItem" :disabled="subject.space == 0"> 
+                </span>Add to Cart</button>
+                        <span v-if="subject.space - cartCount(subject) === 0">All Out!</span>
+                        <span v-else-if="subject.space - cartCount(subject) < 5">
+                            Only{{subject.space - cartCount(subject)}} left!</span>
+                        <span v-else>Buy Now!</span>
+                         </span>Add to Cart</button>
+      </div>
+    </div>
+    </div>
+    <h1>Checkout</h1>
+                <p><strong>First Name:</strong>
+                    <input v-model="order.Name" /></p>
+                <p><strong>Phone number:</strong>
+                    <input v-model.number="order.Phonenumber" />
+                </p>
+                <h2>Order Information</h2>
+                <p>Name: {{order.Name}}</p>
+                <p>Phone number: {{order.Phonenumber}}</p>
+                <button @click='submit' type="submit">Checkout</button>
+            </div>
+        </main>
+    </div>
+
+
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          isDisabled:false,
+          cart:[],
+          subject: subject, },
+
+ methods: {
+                addToCart(subject) {
+                    this.cart.push(subject);
+
+                },
+                showCheckout() {
+                    this.showProduct = this.showProduct ? false : true;
+                },
+
+                canAddToCart(subject) {
+                    return subject.Space > this.cartCount(subject);
+                },
+                cartCount(id) {
+                    let count = 0;
+                    for (let i = 0; i < this.cart.length; i++) {
+                        if (this.cart[i] === id) {
+                            count++;
+                        }
+                    }
+                    return count;
+                },
+                submit() {
+                    if (this.order.Name && this.order.Phonenumber) {
+                        alert("Order Submited")
+                    }
+                    else {
+                        alert("Order Required")
+                    }
+                },
+                del(cart) {
+                    this.cart.splice(cart, 1)
+                },
+                sortTable(key, direction) {
+                    this.sort = `${key} > ${direction}`
+                    if (direction === 'asc') {
+                        this.subject.sort((a, b) => a[key] > b[key] ? 1 : -1)
+                    } else {
+                        this.subject.sort((a, b) => a[key] < b[key] ? 1 : -1)
+                    }
+                }
+            },
+            computed: {
+                cartItemCount() {
+                    return this.cart.length || '';
+                },
+            },
+            
+        });
+    </script>
+</body>
+
+</html>
